@@ -12,6 +12,7 @@ import {
   IonInput,
   IonButton
 } from '@ionic/angular/standalone';
+import {IonToggle} from '@ionic/angular/standalone'
 
 import { TaskService } from '../core/services/task.service';
 import { Task } from '../core/models/task.model';
@@ -31,7 +32,8 @@ import { Task } from '../core/models/task.model';
     IonItem,
     IonLabel,
     IonInput,
-    IonButton
+    IonButton,
+    IonToggle
   ],
 })
 
@@ -56,11 +58,16 @@ export class HomePage implements OnInit {
     const title = this.newTaskTitle.trim();
 
     if (title.length > 0) {
-      this.taskService.addTask(this.newTaskTitle);
+      this.taskService.addTask(title);
       this.newTaskTitle = '';
       this.loadTasks();
     }
     
-
   }
+
+  toggleTask(id: string): void {
+    this.taskService.toggleComplete(id);
+    this.loadTasks();
+  }
+
 }
