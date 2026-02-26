@@ -70,4 +70,9 @@ export class HomePage implements OnInit {
     this.loadTasks();
   }
 
+  deleteTask(id: string): void{
+    this.taskService.deleteTask(id);
+    this.loadTasks(); 
+  }
+
 }
