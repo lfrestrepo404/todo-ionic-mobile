@@ -44,7 +44,7 @@ export class TaskService {
     }
 
     toggleComplete(id: string): void {
-        //LOcalizo y actualizo el estado de la Task sin mutar el resto de la lista
+        //LOcalizo y actualizo el estado de la Task 
         const tasks = this.getTasks();
         for (let task of tasks) {
             if (task.id === id) {
