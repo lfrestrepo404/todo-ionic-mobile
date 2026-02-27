@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+
+
+import { RemoteConfig, fetchAndActivate, getValue } from '@angular/fire/remote-config';
+
+
+
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AddTaskModalComponent } from '../features/add-task-modal/add-task-modal.component';
@@ -34,7 +40,7 @@ import {
   radioButtonOffOutline,
   checkmarkCircle,
   filterOutline,
-  gridOutline 
+  gridOutline
 } from 'ionicons/icons';
 
 import { TaskService } from '../core/services/task.service';
@@ -63,18 +69,29 @@ import { CategoryService } from '../core/services/category.service';
     IonButton,
     IonToggle,
     IonIcon,
-    IonSelect,       
-    IonSelectOption,  
+    IonSelect,
+    IonSelectOption,
     IonBadge
   ],
 })
+
+
+
 export class HomePage implements OnInit {
   tasks: Task[] = [];
   selectedFilterCategory: string = 'all';
+
+
+  // Agregamos la variable que controlará el botón
+  canDelete: boolean = true;
+
   constructor(
     private taskService: TaskService,
     public categoryService: CategoryService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+
+    // 2. Inyectamos RemoteConfig en el constructor
+    private remoteConfig: RemoteConfig
   ) {
 
     addIcons({
@@ -89,8 +106,25 @@ export class HomePage implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  // Modificamos ngOnInit para que sea async y cargue Firebase
+  async ngOnInit() {
     this.loadTasks();
+
+    try {
+      // Configuramos para que actualice al instante (sin caché)
+      this.remoteConfig.settings.minimumFetchIntervalMillis = 0; //
+
+      // Descargamos y activamos los valores de la consola
+      await fetchAndActivate(this.remoteConfig);
+
+      // Obtenemos el valor de la llave que creamos en Firebase
+      this.canDelete = getValue(this.remoteConfig, 'enable_delete_task').asBoolean();
+
+      console.log('¿Borrado habilitado por Firebase?:', this.canDelete);
+    } catch (error) {
+      console.error('Error cargando Remote Config:', error);
+      // Si falla, 'canDelete' se queda en true por defecto
+    }
   }
 
   loadTasks(): void {

@@ -40,7 +40,7 @@
     TO DO LIST
   </div>
 
-  
+
   <ion-list lines="none">
 
     <ion-item *ngFor="let task of tasks" class="task-item">
@@ -62,9 +62,10 @@
             </ion-icon>
           </ion-button>
 
-          <ion-button fill="clear" class="btn-action delete-btn" (click)="deleteTask(task.id)">
+          <ion-button *ngIf="canDelete"  fill="clear" class="btn-action delete-btn" (click)="deleteTask(task.id)">
             <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
           </ion-button>
+
         </div>
       </div>
 
