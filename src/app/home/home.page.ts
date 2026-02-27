@@ -84,7 +84,19 @@ export class HomePage implements OnInit {
   }
 
   loadTasks(): void {
-    this.tasks = this.taskService.getTasks();
+    const rawTasks = this.taskService.getTasks();
+    this.tasks = this.sortTasks(rawTasks);
+  }
+
+  private sortTasks(tasks: Task[]): Task[] {
+    return [...tasks].sort((a, b) => {
+      // Si el estado de completado es distinto, mandamos la completada al final
+      if (a.completed !== b.completed) {
+        return a.completed ? 1 : -1;
+      }
+      // Si tienen el mismo estado, no alteramos su orden relativo (orden de creación original)
+      return 0;
+    });
   }
 
   // Cambiamos addTask para que sea activado por el FAB button 
