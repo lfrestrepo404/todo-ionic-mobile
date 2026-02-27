@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AddTaskModalComponent } from '../features/add-task-modal/add-task-modal.component';
-// Agregamos IonIcon y ModalController a las importaciones
+import { CategoriesModalComponent } from '../features/categories-modal/categories-modal.component';
+
 import {
   IonHeader,
   IonToolbar,
@@ -18,10 +19,12 @@ import {
   IonFabButton,
   IonIcon,
   IonBadge,
+  IonSelect,
+  IonSelectOption,
   ModalController
 } from '@ionic/angular/standalone';
 
-//  Importamos los iconos específicos que vamos a usar
+
 import { addIcons } from 'ionicons';
 import {
   checkmarkCircleOutline,
@@ -30,11 +33,14 @@ import {
   trashOutline,
   radioButtonOffOutline,
   checkmarkCircle,
-  filterOutline
+  filterOutline,
+  gridOutline 
 } from 'ionicons/icons';
 
 import { TaskService } from '../core/services/task.service';
 import { Task } from '../core/models/task.model';
+
+import { CategoryService } from '../core/services/category.service';
 
 @Component({
   selector: 'app-home',
@@ -57,17 +63,20 @@ import { Task } from '../core/models/task.model';
     IonButton,
     IonToggle,
     IonIcon,
+    IonSelect,       
+    IonSelectOption,  
     IonBadge
   ],
 })
 export class HomePage implements OnInit {
   tasks: Task[] = [];
-
+  selectedFilterCategory: string = 'all';
   constructor(
     private taskService: TaskService,
+    public categoryService: CategoryService,
     private modalCtrl: ModalController
   ) {
-    // 3. Registramos los iconos para que sean visibles
+
     addIcons({
       'checkmark-circle-outline': checkmarkCircleOutline,
       'ellipsis-vertical': ellipsisVertical,
@@ -75,7 +84,8 @@ export class HomePage implements OnInit {
       'trash-outline': trashOutline,
       'radio-button-off-outline': radioButtonOffOutline,
       'checkmark-circle': checkmarkCircle,
-      'filter-outline': filterOutline
+      'filter-outline': filterOutline,
+      'grid-outline': gridOutline
     });
   }
 
@@ -84,17 +94,20 @@ export class HomePage implements OnInit {
   }
 
   loadTasks(): void {
-    const rawTasks = this.taskService.getTasks();
+    let rawTasks = this.taskService.getTasks();
+    if (this.selectedFilterCategory && this.selectedFilterCategory !== 'all') {
+      rawTasks = rawTasks.filter(t => t.categoryId === this.selectedFilterCategory);
+    }
     this.tasks = this.sortTasks(rawTasks);
   }
 
   private sortTasks(tasks: Task[]): Task[] {
     return [...tasks].sort((a, b) => {
-      // Si el estado de completado es distinto, mandamos la completada al final
+
       if (a.completed !== b.completed) {
         return a.completed ? 1 : -1;
       }
-      // Si tienen el mismo estado, no alteramos su orden relativo (orden de creación original)
+
       return 0;
     });
   }
@@ -103,9 +116,9 @@ export class HomePage implements OnInit {
   async openNewTaskModal() {
     const modal = await this.modalCtrl.create({
       component: AddTaskModalComponent,
-      initialBreakpoint: 0.5, // Para que se abra hasta la mitad como en tu imagen
+      initialBreakpoint: 0.5,
       breakpoints: [0, 0.5, 0.9],
-      cssClass: 'custom-modal' // Opcional para retoques extra
+      cssClass: 'custom-modal'
     });
 
     await modal.present();
@@ -113,7 +126,7 @@ export class HomePage implements OnInit {
     // Escuchamos la respuesta del modal
     const { data } = await modal.onWillDismiss();
     if (data && data.title) {
-      this.taskService.addTask(data.title); // Usamos tu servicio [cite: 8]
+      this.taskService.addTask(data.title, data.categoryId);
       this.loadTasks();
     }
   }
@@ -127,4 +140,30 @@ export class HomePage implements OnInit {
     this.taskService.deleteTask(id);
     this.loadTasks();
   }
+
+
+  async openCategoriesModal() {
+    const modal = await this.modalCtrl.create({
+      component: CategoriesModalComponent,
+      initialBreakpoint: 0.7,
+      breakpoints: [0, 0.7, 0.9],
+      cssClass: 'custom-modal'
+    });
+
+    await modal.present();
+
+
+    await modal.onWillDismiss();
+    this.loadTasks();
+  }
+
+  getCategoryName(categoryId?: string): string {
+    if (!categoryId) return '';
+    const categories = this.categoryService.getCategories();
+    const category = categories.find(c => c.id === categoryId);
+    return category ? category.name : '';
+  }
+
+
 }
+

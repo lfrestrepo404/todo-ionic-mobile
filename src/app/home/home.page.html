@@ -8,8 +8,8 @@
         <span class="header-title">My Tasks</span>
       </div>
 
-      <ion-button fill="clear" class="header-menu">
-        <ion-icon name="ellipsis-vertical"></ion-icon>
+      <ion-button fill="clear" class="header-menu" (click)="openCategoriesModal()">
+        <ion-icon name="grid-outline"></ion-icon>
       </ion-button>
 
     </div>
@@ -19,46 +19,42 @@
 
 
 <ion-content class="ion-padding">
-<!-- 
+
   <div class="section-title">
     FILTER
-  </div> -->
+  </div>
   <div class="filter-section">
-
-    <!-- <div class="filter-card">
-      <ion-input placeholder="Choose category..." readonly>
-      </ion-input>
+    <ion-item lines="none" class="filter-card">
+      <ion-select interface="popover" placeholder="All Categories" [(ngModel)]="selectedFilterCategory"
+        (ionChange)="loadTasks()" toggle-icon="chevron-down-outline">
+        <ion-select-option value="all">All Categories</ion-select-option>
+        <ion-select-option *ngFor="let cat of categoryService.getCategories()" [value]="cat.id">
+          {{ cat.name }}
+        </ion-select-option>
+      </ion-select>
       <ion-icon name="filter-outline" slot="end"></ion-icon>
-    </div> -->
+    </ion-item>
   </div>
 
   <div class="section-title">
     TO DO LIST
   </div>
 
-  <!-- <ion-list> 
-    <ion-item *ngFor="let task of tasks" (click)="toggleTask(task.id)">
-      <ion-label [class.completed]="task.completed">
-        {{ task.title }}
-      </ion-label>
-
-      <ion-toggle slot="end" [checked]="task.completed" (ionChange)="toggleTask(task.id)">
-      </ion-toggle>
-
-      <ion-button slot="end" color="danger" fill="clear" (click)="deleteTask(task.id)">
-        Delete
-      </ion-button>
-
-    </ion-item>
-  </ion-list> -->
+  
   <ion-list lines="none">
 
     <ion-item *ngFor="let task of tasks" class="task-item">
 
       <div class="task-content" [class.completed]="task.completed">
-        <div class="task-title" [class.completed]="task.completed">
-          {{ task.title }}
+        <div class="task-info">
+          <div class="task-title" [class.completed]="task.completed">
+            {{ task.title }}
+          </div>
+          <ion-badge mode="ios" *ngIf="task.categoryId" class="category-badge">
+            {{ getCategoryName(task.categoryId) }}
+          </ion-badge>
         </div>
+
 
         <div class="task-actions">
           <ion-button fill="clear" class="btn-action check-btn" (click)="toggleTask(task.id)">

@@ -7,11 +7,19 @@
   <div class="input-group">
     <ion-label class="input-label">Title Task</ion-label>
     <ion-item lines="none" class="custom-input-item">
-      <ion-input 
-        placeholder="Add Task Name" 
-        [(ngModel)]="taskTitle"
-        (keyup.enter)="create()">
+      <ion-input placeholder="Add Task Name" [(ngModel)]="taskTitle" (keyup.enter)="create()">
       </ion-input>
+    </ion-item>
+  </div>
+  <div class="input-group">
+    <ion-label class="input-label">Category</ion-label>
+    <ion-item lines="none" class="custom-input-item">
+      <ion-select placeholder="Choose category..." [(ngModel)]="selectedCategoryId" interface="popover"
+        toggle-icon="chevron-down-outline" class="custom-select">
+        <ion-select-option *ngFor="let cat of categories" [value]="cat.id">
+          {{ cat.name }}
+        </ion-select-option>
+      </ion-select>
     </ion-item>
   </div>
 

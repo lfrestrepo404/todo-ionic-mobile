@@ -31,14 +31,6 @@
   opacity: 0.6;
 }
 
-.custom-toolbar {
-  --background: #6c8df5;
-  --color: #ffffff;
-  border-bottom-left-radius: 28px;
-  // padding: 18px 0px;
-  border-bottom-right-radius: 28px;
-  display: flex;
-}
 
 .header-md {
   box-shadow: 0 0 0 transparent;
@@ -101,7 +93,7 @@
   --color: white;
   border-radius: 0 0 25px 25px;
   overflow: hidden;
-  padding-top: 12px;
+  padding-top: var(--ion-safe-area-top);
   display: flex;
   align-items: flex-end;
   padding-bottom: 12px;
@@ -112,7 +104,7 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 0 30px;
+    padding: 12px 30px 0 30px;
 
     .header-left {
       display: flex;
@@ -146,6 +138,7 @@
 ion-content {
   --background: #fdfdfd;
 }
+
 .task-actions {
   display: flex;
   gap: 8px;
@@ -165,16 +158,90 @@ ion-content {
     }
   }
 
-  
+
   .check-btn {
-    --color: #6a96f9; 
-    
+    --color: #6a96f9;
+
     &.task-completed {
-      --color: #2dd36f; 
+      --color: #2dd36f;
     }
   }
 
   .delete-btn {
     --color: #eb445a;
+  }
+}
+
+.category-badge {
+  // Colores y fondo
+  --background: #6a96f9;
+  --color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 16px;
+  margin-top: 6px;
+  display: inline-block;
+  border: 1px solid rgba(99, 102, 241, 0.1);
+}
+
+
+.completed .category-badge {
+  --background: #f3f4f6;
+  --color: #9ca3af;
+  border-color: transparent;
+  opacity: 0.8;
+}
+
+
+.filter-section {
+  margin: 10px 5px 20px 5px;
+
+  .filter-card {
+    --background: #f9f9f9;
+    --border-radius: 16px;
+    --padding-start: 16px;
+    --inner-padding-end: 16px;
+    border: 1px solid #eee;
+    box-shadow: none;
+    border-radius: 16px;
+    margin-bottom: 10px;
+
+    ion-select {
+      width: 100%;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      color: #444;
+      --placeholder-color: #999;
+      --placeholder-opacity: 1;
+
+      &::part(text) {
+        font-size: 14px;
+      }
+
+      &::part(icon) {
+        color: #6a96f9;
+        opacity: 1;
+      }
+    }
+
+    ion-icon {
+      color: #999;
+      font-size: 20px;
+    }
+  }
+}
+
+ion-fab {
+ 
+  margin-bottom: calc(20px + env(safe-area-inset-bottom));
+  margin-right: 8px;
+
+  .custom-fab {
+    --background: #6a96f9; // Asegúrate de que combine con tu header
+    --background-activated: #1d4ed8;
   }
 }
