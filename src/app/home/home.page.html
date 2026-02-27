@@ -1,20 +1,47 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title> ToDo App</ion-title>
+  <ion-toolbar class="custom-toolbar">
+
+    <div class="header-container">
+
+      <div class="header-left">
+        <ion-icon name="checkmark-circle-outline"></ion-icon>
+        <span class="header-title">My Tasks</span>
+      </div>
+
+      <ion-button fill="clear" class="header-menu">
+        <ion-icon name="ellipsis-vertical"></ion-icon>
+      </ion-button>
+
+    </div>
+
   </ion-toolbar>
 </ion-header>
 
 
-
 <ion-content class="ion-padding">
 
-  <ion-item>
+  <!-- <ion-item>
     <ion-input placeholder="Nueva Tarea..." [(ngModel)]="newTaskTitle">
     </ion-input>
     <ion-button (click)="addTask()">Agregar</ion-button>
-  </ion-item>
+  </ion-item> -->
+  <div class="section-title">
+    FILTER
+  </div>
+  <div class="filter-section">
 
-  <ion-list>
+    <!-- <div class="filter-card">
+      <ion-input placeholder="Choose category..." readonly>
+      </ion-input>
+      <ion-icon name="filter-outline" slot="end"></ion-icon>
+    </div> -->
+  </div>
+
+  <div class="section-title">
+    TO DO LIST
+  </div>
+
+  <!-- <ion-list> 
     <ion-item *ngFor="let task of tasks" (click)="toggleTask(task.id)">
       <ion-label [class.completed]="task.completed">
         {{ task.title }}
@@ -28,5 +55,34 @@
       </ion-button>
 
     </ion-item>
+  </ion-list> -->
+  <ion-list lines="none">
+
+    <ion-item *ngFor="let task of tasks" class="task-item">
+
+      <div class="task-content" [class.completed]="task.completed">
+        <div class="task-title" [class.completed]="task.completed">
+          {{ task.title }}
+        </div>
+
+        <div class="task-actions">
+          <ion-icon class="task-check" [name]="task.completed ? 'checkmark-circle' : 'radio-button-off-outline'"
+            (click)="toggleTask(task.id)">
+          </ion-icon>
+
+          <ion-button fill="clear" color="danger" (click)="deleteTask(task.id)">
+            <ion-icon name="trash-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+
+    </ion-item>
+
   </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      +
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

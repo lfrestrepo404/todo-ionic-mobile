@@ -30,3 +30,126 @@
   text-decoration: line-through;
   opacity: 0.6;
 }
+
+.custom-toolbar {
+  --background: #6c8df5;
+  --color: #ffffff;
+  border-bottom-left-radius: 28px;
+  // padding: 18px 0px;
+  border-bottom-right-radius: 28px;
+  display: flex;
+}
+
+.header-md{
+  box-shadow: 0 0 0 transparent;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 400;
+  margin: 20px 0 10px 10px;
+  color: #ABABAB;
+  text-align: left !important;
+}
+
+.task-item {
+  --background: transparent;
+  margin-bottom: 12px;
+}
+
+.task-content {
+  background: #ffffff;
+  border: 1px solid #d7d7d7;
+  border-radius: 12px;
+  padding: 16px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-content.completed{
+  background: #ebebeb;
+}
+
+.task-title {
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: capitalize;
+  color: #424242;
+}
+
+.task-title.completed {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+.task-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.title-default{
+  text-align: left;
+  padding-left: 30px;
+}
+
+.custom-toolbar {
+  
+  --background: #6a96f9; 
+  --color: white;
+  border-radius: 0 0 25px 25px;
+  overflow: hidden;
+  padding-top: 12px;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 12px;
+  box-shadow: 0 4px 15px rgba(106, 150, 249, 0.3);
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 30px;
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      ion-icon {
+        font-size: 28px;
+        color: white;
+      }
+
+      .header-title {
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+      }
+    }
+
+    .header-menu {
+      --color: white;
+      margin: 0;
+      ion-icon {
+        font-size: 24px;
+      }
+    }
+  }
+}
+
+
+ion-content {
+  --background: #fdfdfd; 
+}
+
+.task-check{
+  width: 16px;
+  background-color: #F3F3F3;
+  padding: 6px;
+  height: 16px;
+  border-radius: 50%;
+}

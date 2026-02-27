@@ -35,3 +35,26 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/assets/fonts/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/assets/fonts/Poppins-Bold.ttf') format('truetype');
+  font-weight: 700; // El Bold estándar es 700, no 600
+  font-style: normal;
+}
+
+// Aplicar a toda la app de Ionic
+:root {
+  --ion-font-family: 'Poppins', sans-serif;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+}

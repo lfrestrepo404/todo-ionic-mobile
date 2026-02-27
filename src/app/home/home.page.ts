@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+// Agregamos IonIcon y ModalController a las importaciones
 import {
   IonHeader,
   IonToolbar,
@@ -10,20 +11,40 @@ import {
   IonItem,
   IonLabel,
   IonInput,
-  IonButton
+  IonButton,
+  IonToggle,
+  IonFab,
+  IonFabButton,
+  IonIcon,
+  IonBadge,
+  ModalController
 } from '@ionic/angular/standalone';
-import {IonToggle} from '@ionic/angular/standalone'
+
+//  Importamos los iconos específicos que vamos a usar
+import { addIcons } from 'ionicons';
+import { 
+  checkmarkCircleOutline, 
+  ellipsisVertical, 
+  add, 
+  trashOutline, 
+  radioButtonOffOutline, 
+  checkmarkCircle,
+  filterOutline 
+} from 'ionicons/icons';
 
 import { TaskService } from '../core/services/task.service';
 import { Task } from '../core/models/task.model';
 
 @Component({
   selector: 'app-home',
+  styleUrls: ['home.page.scss'],
   templateUrl: 'home.page.html',
   standalone: true,
   imports: [
     CommonModule,
     FormsModule,
+    IonFab,
+    IonFabButton,
     IonHeader,
     IonToolbar,
     IonTitle,
@@ -33,17 +54,29 @@ import { Task } from '../core/models/task.model';
     IonLabel,
     IonInput,
     IonButton,
-    IonToggle
+    IonToggle,
+    IonIcon,
+    IonBadge
   ],
 })
-
 export class HomePage implements OnInit {
-
-  // inicializamos con un array vacío para evitar errores de renderizado en el template
   tasks: Task[] = [];
-  newTaskTitle: string = '';
 
-  constructor(private taskService: TaskService) { }
+  constructor(
+    private taskService: TaskService,
+    private modalCtrl: ModalController 
+  ) {
+    // 3. Registramos los iconos para que sean visibles
+    addIcons({
+      'checkmark-circle-outline': checkmarkCircleOutline,
+      'ellipsis-vertical': ellipsisVertical,
+      'add': add,
+      'trash-outline': trashOutline,
+      'radio-button-off-outline': radioButtonOffOutline,
+      'checkmark-circle': checkmarkCircle,
+      'filter-outline': filterOutline
+    });
+  }
 
   ngOnInit(): void {
     this.loadTasks();
@@ -53,16 +86,11 @@ export class HomePage implements OnInit {
     this.tasks = this.taskService.getTasks();
   }
 
-  addTask(): void {
-
-    const title = this.newTaskTitle.trim();
-
-    if (title.length > 0) {
-      this.taskService.addTask(title);
-      this.newTaskTitle = '';
-      this.loadTasks();
-    }
-    
+  // Cambiamos addTask para que sea activado por el FAB button 
+  async openNewTaskModal() {
+    /* Modal
+    */
+    console.log('Abrir modal de nueva tarea');
   }
 
   toggleTask(id: string): void {
@@ -70,9 +98,8 @@ export class HomePage implements OnInit {
     this.loadTasks();
   }
 
-  deleteTask(id: string): void{
+  deleteTask(id: string): void {
     this.taskService.deleteTask(id);
-    this.loadTasks(); 
+    this.loadTasks();
   }
-
 }
