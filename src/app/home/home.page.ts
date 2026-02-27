@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AddTaskModalComponent } from '../features/add-task-modal/add-task-modal.component';
+import { CategoriesModalComponent } from '../features/categories-modal/categories-modal.component';
 // Agregamos IonIcon y ModalController a las importaciones
 import {
   IonHeader,
@@ -125,6 +126,22 @@ export class HomePage implements OnInit {
 
   deleteTask(id: string): void {
     this.taskService.deleteTask(id);
+    this.loadTasks();
+  }
+
+
+  async openCategoriesModal() {
+    const modal = await this.modalCtrl.create({
+      component: CategoriesModalComponent,
+      initialBreakpoint: 0.7, // Se abre casi todo para ver bien la lista
+      breakpoints: [0, 0.7, 0.9],
+      cssClass: 'custom-modal'
+    });
+
+    await modal.present();
+
+    // Al cerrar, refrescamos por si hubo cambios que afecten a las tareas
+    await modal.onWillDismiss();
     this.loadTasks();
   }
 }

@@ -1,0 +1,33 @@
+<ion-content class="ion-padding custom-modal">
+  <!-- <div class="modal-handle"></div> -->
+  <h2>Categories</h2>
+
+  <div class="input-group">
+    <ion-label>New Category</ion-label>
+    <ion-item lines="none" class="custom-input-item">
+      <ion-input placeholder="Add Category Name" [(ngModel)]="newCategoryName"></ion-input>
+    </ion-item>
+    <div class="modal-footer">
+      <ion-button class="btn-create" (click)="add()">Create</ion-button>
+    </div>
+  </div>
+
+  <ion-label class="section-title">CATEGORIES LIST</ion-label>
+
+  <ion-list lines="none">
+    <div class="category-edit-item" *ngFor="let cat of categories">
+      <ion-input [(ngModel)]="cat.name" (ionBlur)="update(cat)"></ion-input>
+      <div class="action-buttons">
+        <ion-button fill="clear" color="primary">
+          <ion-icon name="pencil-outline"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" color="danger" (click)="delete(cat.id)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+  </ion-list>
+  <div class="modal-footer">
+    <ion-button expand="block" class="btn-cancel"  (click)="dismiss()">Close</ion-button>
+  </div>
+</ion-content>
