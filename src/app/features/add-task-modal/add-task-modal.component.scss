@@ -33,16 +33,17 @@
     --border-radius: 12px;
     margin-top: 8px;
     border: 1px solid #eee;
+    border-radius: 16px;
     
     ion-input {
-      --padding-start: 15px;
+      --padding-start: 18px;
     }
   }
 }
 
 .modal-footer {
   display: flex;
-  flex-direction: column;
+  justify-content: space-around;
   gap: 10px;
   margin-top: 20px;
 
@@ -52,10 +53,16 @@
     --box-shadow: 0 4px 10px rgba(106, 150, 249, 0.3);
     height: 50px;
     font-weight: 600;
+    width: 40%;
   }
+
 
   .btn-cancel {
     --color: #777;
+    width: 40%;
     font-weight: 500;
+    --background: #e0e0e0;
+    --border-radius: 12px;
+    --box-shadow: 0 4px 10px rgba(106, 150, 249, 0.3);
   }
 }
