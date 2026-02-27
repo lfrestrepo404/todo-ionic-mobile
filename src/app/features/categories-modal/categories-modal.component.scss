@@ -51,11 +51,11 @@ h2 {
   }
 }
 
-// Estilo para los elementos de la lista (CRUD)
+
 .category-edit-item {
   display: flex;
   align-items: center;
-  background: #f9f9f9; // Mismo gris que el input de arriba
+  background: #f9f9f9; 
   border: 1px solid #eee;
   border-radius: 16px;
   margin-bottom: 12px;
@@ -88,7 +88,7 @@ h2 {
 
   .btn-create {
     --background: #6a96f9;
-    --color: #ffffff; // Texto blanco para contraste
+    --color: #ffffff; 
     --border-radius: 12px;
     --box-shadow: 0 4px 10px rgba(106, 150, 249, 0.3);
     height: 48px;
@@ -99,13 +99,13 @@ h2 {
 
   .btn-cancel {
     --color: #777 !important;
-    --background: #e0e0e0 !important; // Forzamos el gris
+    --background: #e0e0e0 !important; 
     --border-radius: 12px;
     height: 48px;
     font-weight: 500;
     width: 100%;
     margin: 0;
-    --opacity: 1; // Asegura que se vea el fondo
+    --opacity: 1; 
   }
 }
 

@@ -66,3 +66,15 @@
     --box-shadow: 0 4px 10px rgba(106, 150, 249, 0.3);
   }
 }
+
+.custom-select {
+  width: 100%;
+  --placeholder-color: #999;
+  --placeholder-opacity: 1;
+  font-family: 'Poppins', sans-serif;
+  
+  
+  &::part(container) {
+    width: 100%;
+  }
+}

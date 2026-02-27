@@ -19,6 +19,8 @@ import {
   IonFabButton,
   IonIcon,
   IonBadge,
+  IonSelect,
+  IonSelectOption,
   ModalController
 } from '@ionic/angular/standalone';
 
@@ -60,15 +62,17 @@ import { CategoryService } from '../core/services/category.service';
     IonButton,
     IonToggle,
     IonIcon,
+    IonSelect,       
+    IonSelectOption,  
     IonBadge
   ],
 })
 export class HomePage implements OnInit {
   tasks: Task[] = [];
-
+  selectedFilterCategory: string = 'all';
   constructor(
     private taskService: TaskService,
-    private categoryService: CategoryService,
+    public categoryService: CategoryService,
     private modalCtrl: ModalController
   ) {
 
@@ -88,7 +92,10 @@ export class HomePage implements OnInit {
   }
 
   loadTasks(): void {
-    const rawTasks = this.taskService.getTasks();
+    let rawTasks = this.taskService.getTasks();
+    if (this.selectedFilterCategory && this.selectedFilterCategory !== 'all') {
+      rawTasks = rawTasks.filter(t => t.categoryId === this.selectedFilterCategory);
+    }
     this.tasks = this.sortTasks(rawTasks);
   }
 
@@ -154,4 +161,7 @@ export class HomePage implements OnInit {
     const category = categories.find(c => c.id === categoryId);
     return category ? category.name : '';
   }
+
+
 }
+

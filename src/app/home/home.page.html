@@ -19,17 +19,21 @@
 
 
 <ion-content class="ion-padding">
-  <!-- 
+
   <div class="section-title">
     FILTER
-  </div> -->
+  </div>
   <div class="filter-section">
-
-    <!-- <div class="filter-card">
-      <ion-input placeholder="Choose category..." readonly>
-      </ion-input>
+    <ion-item lines="none" class="filter-card">
+      <ion-select interface="popover" placeholder="All Categories" [(ngModel)]="selectedFilterCategory"
+        (ionChange)="loadTasks()" toggle-icon="chevron-down-outline">
+        <ion-select-option value="all">All Categories</ion-select-option>
+        <ion-select-option *ngFor="let cat of categoryService.getCategories()" [value]="cat.id">
+          {{ cat.name }}
+        </ion-select-option>
+      </ion-select>
       <ion-icon name="filter-outline" slot="end"></ion-icon>
-    </div> -->
+    </ion-item>
   </div>
 
   <div class="section-title">
