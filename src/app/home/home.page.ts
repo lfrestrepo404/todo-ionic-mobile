@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AddTaskModalComponent } from '../features/add-task-modal/add-task-modal.component';
 import { CategoriesModalComponent } from '../features/categories-modal/categories-modal.component';
-// Agregamos IonIcon y ModalController a las importaciones
+
 import {
   IonHeader,
   IonToolbar,
@@ -22,7 +22,7 @@ import {
   ModalController
 } from '@ionic/angular/standalone';
 
-//  Importamos los iconos específicos que vamos a usar
+
 import { addIcons } from 'ionicons';
 import {
   checkmarkCircleOutline,
@@ -36,6 +36,8 @@ import {
 
 import { TaskService } from '../core/services/task.service';
 import { Task } from '../core/models/task.model';
+
+import { CategoryService } from '../core/services/category.service';
 
 @Component({
   selector: 'app-home',
@@ -66,9 +68,10 @@ export class HomePage implements OnInit {
 
   constructor(
     private taskService: TaskService,
+    private categoryService: CategoryService,
     private modalCtrl: ModalController
   ) {
-    // 3. Registramos los iconos para que sean visibles
+
     addIcons({
       'checkmark-circle-outline': checkmarkCircleOutline,
       'ellipsis-vertical': ellipsisVertical,
@@ -91,11 +94,11 @@ export class HomePage implements OnInit {
 
   private sortTasks(tasks: Task[]): Task[] {
     return [...tasks].sort((a, b) => {
-      // Si el estado de completado es distinto, mandamos la completada al final
+
       if (a.completed !== b.completed) {
         return a.completed ? 1 : -1;
       }
-      // Si tienen el mismo estado, no alteramos su orden relativo (orden de creación original)
+
       return 0;
     });
   }
@@ -104,9 +107,9 @@ export class HomePage implements OnInit {
   async openNewTaskModal() {
     const modal = await this.modalCtrl.create({
       component: AddTaskModalComponent,
-      initialBreakpoint: 0.5, // Para que se abra hasta la mitad como en tu imagen
+      initialBreakpoint: 0.5,
       breakpoints: [0, 0.5, 0.9],
-      cssClass: 'custom-modal' // Opcional para retoques extra
+      cssClass: 'custom-modal'
     });
 
     await modal.present();
@@ -114,7 +117,7 @@ export class HomePage implements OnInit {
     // Escuchamos la respuesta del modal
     const { data } = await modal.onWillDismiss();
     if (data && data.title) {
-      this.taskService.addTask(data.title); // Usamos tu servicio [cite: 8]
+      this.taskService.addTask(data.title, data.categoryId);
       this.loadTasks();
     }
   }
@@ -133,15 +136,22 @@ export class HomePage implements OnInit {
   async openCategoriesModal() {
     const modal = await this.modalCtrl.create({
       component: CategoriesModalComponent,
-      initialBreakpoint: 0.7, // Se abre casi todo para ver bien la lista
+      initialBreakpoint: 0.7,
       breakpoints: [0, 0.7, 0.9],
       cssClass: 'custom-modal'
     });
 
     await modal.present();
 
-    // Al cerrar, refrescamos por si hubo cambios que afecten a las tareas
+
     await modal.onWillDismiss();
     this.loadTasks();
+  }
+
+  getCategoryName(categoryId?: string): string {
+    if (!categoryId) return '';
+    const categories = this.categoryService.getCategories();
+    const category = categories.find(c => c.id === categoryId);
+    return category ? category.name : '';
   }
 }

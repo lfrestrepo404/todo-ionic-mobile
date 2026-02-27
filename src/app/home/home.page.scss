@@ -178,3 +178,33 @@ ion-content {
     --color: #eb445a;
   }
 }
+
+.category-badge {
+  // Colores y fondo
+  --background: #6a96f9;
+  --color: #ffffff;     
+  
+  // Tipografía y espaciado
+  font-family: 'Poppins', sans-serif;
+  font-size: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  
+  // Forma y bordes
+  padding: 4px 10px;
+  border-radius: 16px;
+  margin-top: 6px;
+  display: inline-block;
+  
+  // Efecto sutil
+  border: 1px solid rgba(99, 102, 241, 0.1);
+}
+
+// Estilo cuando la tarea está completada
+.completed .category-badge {
+  --background: #f3f4f6;
+  --color: #9ca3af;
+  border-color: transparent;
+  opacity: 0.8;
+}

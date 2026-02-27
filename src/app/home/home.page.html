@@ -8,7 +8,7 @@
         <span class="header-title">My Tasks</span>
       </div>
 
-      <ion-button fill="clear" class="header-menu" (click)="openCategoriesModal()"> 
+      <ion-button fill="clear" class="header-menu" (click)="openCategoriesModal()">
         <ion-icon name="ellipsis-vertical"></ion-icon>
       </ion-button>
 
@@ -19,7 +19,7 @@
 
 
 <ion-content class="ion-padding">
-<!-- 
+  <!-- 
   <div class="section-title">
     FILTER
   </div> -->
@@ -56,9 +56,15 @@
     <ion-item *ngFor="let task of tasks" class="task-item">
 
       <div class="task-content" [class.completed]="task.completed">
-        <div class="task-title" [class.completed]="task.completed">
-          {{ task.title }}
+        <div class="task-info">
+          <div class="task-title" [class.completed]="task.completed">
+            {{ task.title }}
+          </div>
+          <ion-badge mode="ios" *ngIf="task.categoryId" class="category-badge">
+            {{ getCategoryName(task.categoryId) }}
+          </ion-badge>
         </div>
+
 
         <div class="task-actions">
           <ion-button fill="clear" class="btn-action check-btn" (click)="toggleTask(task.id)">
