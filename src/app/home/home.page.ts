@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AddTaskModalComponent } from '../features/add-task-modal/add-task-modal.component';
 // Agregamos IonIcon y ModalController a las importaciones
 import {
   IonHeader,
@@ -22,14 +23,14 @@ import {
 
 //  Importamos los iconos específicos que vamos a usar
 import { addIcons } from 'ionicons';
-import { 
-  checkmarkCircleOutline, 
-  ellipsisVertical, 
-  add, 
-  trashOutline, 
-  radioButtonOffOutline, 
+import {
+  checkmarkCircleOutline,
+  ellipsisVertical,
+  add,
+  trashOutline,
+  radioButtonOffOutline,
   checkmarkCircle,
-  filterOutline 
+  filterOutline
 } from 'ionicons/icons';
 
 import { TaskService } from '../core/services/task.service';
@@ -64,7 +65,7 @@ export class HomePage implements OnInit {
 
   constructor(
     private taskService: TaskService,
-    private modalCtrl: ModalController 
+    private modalCtrl: ModalController
   ) {
     // 3. Registramos los iconos para que sean visibles
     addIcons({
@@ -88,9 +89,21 @@ export class HomePage implements OnInit {
 
   // Cambiamos addTask para que sea activado por el FAB button 
   async openNewTaskModal() {
-    /* Modal
-    */
-    console.log('Abrir modal de nueva tarea');
+    const modal = await this.modalCtrl.create({
+      component: AddTaskModalComponent,
+      initialBreakpoint: 0.5, // Para que se abra hasta la mitad como en tu imagen
+      breakpoints: [0, 0.5, 0.9],
+      cssClass: 'custom-modal' // Opcional para retoques extra
+    });
+
+    await modal.present();
+
+    // Escuchamos la respuesta del modal
+    const { data } = await modal.onWillDismiss();
+    if (data && data.title) {
+      this.taskService.addTask(data.title); // Usamos tu servicio [cite: 8]
+      this.loadTasks();
+    }
   }
 
   toggleTask(id: string): void {

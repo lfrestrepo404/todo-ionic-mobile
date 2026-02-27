@@ -66,12 +66,13 @@
         </div>
 
         <div class="task-actions">
-          <ion-icon class="task-check" [name]="task.completed ? 'checkmark-circle' : 'radio-button-off-outline'"
-            (click)="toggleTask(task.id)">
-          </ion-icon>
+          <ion-button fill="clear" class="btn-action check-btn" (click)="toggleTask(task.id)">
+            <ion-icon slot="icon-only" [name]="task.completed ? 'checkmark-circle' : 'radio-button-off-outline'">
+            </ion-icon>
+          </ion-button>
 
-          <ion-button fill="clear" color="danger" (click)="deleteTask(task.id)">
-            <ion-icon name="trash-outline"></ion-icon>
+          <ion-button fill="clear" class="btn-action delete-btn" (click)="deleteTask(task.id)">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
           </ion-button>
         </div>
       </div>
@@ -81,8 +82,10 @@
   </ion-list>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
-      +
+    <ion-fab-button class="custom-fab" (click)="openNewTaskModal()">
+      <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
+
 </ion-content>

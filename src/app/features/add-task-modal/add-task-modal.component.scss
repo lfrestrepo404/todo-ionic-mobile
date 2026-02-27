@@ -1,0 +1,61 @@
+.custom-modal-content {
+  --background: #ffffff;
+  font-family: 'Poppins', sans-serif;
+}
+
+.modal-handle {
+  width: 50px;
+  height: 5px;
+  background: #e0e0e0;
+  border-radius: 10px;
+  margin: 10px auto 20px auto;
+}
+
+.modal-header h2 {
+  text-align: center;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.input-group {
+  margin-bottom: 25px;
+
+  .input-label {
+    font-weight: 500;
+    color: #444;
+    font-size: 16px;
+    margin-left: 5px;
+  }
+
+  .custom-input-item {
+    --background: #f9f9f9;
+    --border-radius: 12px;
+    margin-top: 8px;
+    border: 1px solid #eee;
+    
+    ion-input {
+      --padding-start: 15px;
+    }
+  }
+}
+
+.modal-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+
+  .btn-create {
+    --background: #6a96f9;
+    --border-radius: 12px;
+    --box-shadow: 0 4px 10px rgba(106, 150, 249, 0.3);
+    height: 50px;
+    font-weight: 600;
+  }
+
+  .btn-cancel {
+    --color: #777;
+    font-weight: 500;
+  }
+}

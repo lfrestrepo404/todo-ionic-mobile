@@ -1,0 +1,23 @@
+<ion-content class="ion-padding custom-modal-content">
+  <div class="modal-handle"></div>
+
+  <div class="modal-header">
+    <h2>New Task</h2>
+  </div>
+
+  <div class="input-group">
+    <ion-label class="input-label">Title Task</ion-label>
+    <ion-item lines="none" class="custom-input-item">
+      <ion-input 
+        placeholder="Add Task Name" 
+        [(ngModel)]="taskTitle"
+        (keyup.enter)="create()">
+      </ion-input>
+    </ion-item>
+  </div>
+
+  <div class="modal-footer">
+    <ion-button class="btn-create" (click)="create()">Create</ion-button>
+    <ion-button fill="clear" class="btn-cancel" (click)="dismiss()">Cancel</ion-button>
+  </div>
+</ion-content>
